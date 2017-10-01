@@ -29,8 +29,8 @@ int Creat(SqList &L)
 	int a=0;
 	printf("请输入你要创建的元素个数:");
 	scanf_s("%d", &a);
-	/*if (a<1 || a>L.length)
-		return 0;*/
+	if (a<1 || a>MAXSIZE)
+		return ERROR;
 	for (int i = 0; i < a; i++)
 	{
 		printf("请输入第%d个元素", i + 1);
