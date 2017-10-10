@@ -57,7 +57,7 @@ int ListInsert(SqList&L, int i, ElemType e)
 	if (L.length == MAXSIZE)
 		return ERROR;
 	for (j = L.length; j >= i - 1; j--)
-		L.elem[j + 1] = L.elem[j];
+		L.elem[j + 1] = L.elem[j];//L.elem[j ] = L.elem[j - 1]; 下次测试
 	L.elem[i - 1] = e;
 	++L.length;
 	return OK;
@@ -112,7 +112,7 @@ int ListInsertValues(SqList &L, ElemType e)
 			L.elem[j + 1] = L.elem[j];
 		}
 		else
-		{
+		{	
 			L.elem[j + 1] = e;
 			break;
 		}
@@ -145,10 +145,11 @@ int CreatA(SqList &A)
 	return OK;
 }
 //-----11.两个线性表的合并——————
-int HEBING(SqList &L, SqList &A)
+
+int HEBING(SqList &L, SqList A)
 {
 	int rnum = 0;
-	for (int i = 0; i<A.length + L.length - 2; i++)
+	for (int i = 0; i<A.length + L.length - 1; i++)
 	{
 		if (i<=L.length-1 )
 		{
@@ -162,10 +163,9 @@ int HEBING(SqList &L, SqList &A)
 				GetElem(A, j+1, rnum);
 				if (!LocateElem(L, rnum))
 				{
-					
-					ListInsert(L, i+1, rnum);
-					//L.elem[i] = rnum;
 					L.length++;
+					//ListInsert(L, i+1, rnum);下次用函数调用
+					L.elem[i] = rnum;
 				}
 			}
 		}
