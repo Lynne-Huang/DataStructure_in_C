@@ -26,7 +26,7 @@ int InitList(SqList &L)
 //—————2.顺序表的建立————
 int Creat(SqList &L)
 {
-	int a=0;
+	int a = 0;
 	printf("请输入你要创建的元素个数:");
 	scanf_s("%d", &a);
 	if (a<1 || a>MAXSIZE)
@@ -94,7 +94,7 @@ int Display(SqList &L)
 	printf("线性表中的元素为\n");
 	for (i = 0; i < L.length; i++)
 	{
-		printf("%d\t",L.elem[i]);
+		printf("%d\t", L.elem[i]);
 	}printf("\n");
 	return OK;
 }
@@ -112,7 +112,7 @@ int ListInsertValues(SqList &L, ElemType e)
 			L.elem[j + 1] = L.elem[j];
 		}
 		else
-		{	
+		{
 			L.elem[j + 1] = e;
 			break;
 		}
@@ -145,33 +145,57 @@ int CreatA(SqList &A)
 	return OK;
 }
 //-----11.两个线性表的合并——————
-
 int HEBING(SqList &L, SqList A)
 {
+	if (L.length == MAXSIZE)
+		return ERROR;
 	int rnum = 0;
 	for (int i = 0; i<A.length + L.length - 1; i++)
 	{
-		if (i<=L.length-1 )
+		if (i >L.length - 1)
 		{
-			GetElem(L, i+1, rnum);
-			L.elem[i] = rnum;
-		}
-		else
-		{
-			for(int j=0;j<A.length-1;j++)
+			for (int j = 1; j <= A.length; j++)
 			{
-				GetElem(A, j+1, rnum);
+				GetElem(A, j, rnum);
 				if (!LocateElem(L, rnum))
 				{
-					L.length++;
-					//ListInsert(L, i+1, rnum);下次用函数调用
-					L.elem[i] = rnum;
+					//L.length++;
+					ListInsert(L, L.length + 1, rnum);//下次用函数调用i+1
+													  //L.elem[i] = rnum;
+													  //L.length++;
 				}
+
+
 			}
 		}
-	}	
+	}
 	return OK;
 }
+//-----12.两个线性表的有序合并——————
+/*int ListhebingValues(SqList &L, SqList A)
+{
+if (L.length == MAXSIZE)
+return ERROR;
+int rnum = 0;
+for (int i = 0; i<A.length + L.length - 1; i++)
+{
+if (i >L.length)
+{
+for (int j = 0; j<A.length - 1; j++)
+{
+GetElem(A, j + 1, rnum);
+if (!LocateElem(L, rnum))
+{
+L.length++;
+//ListInsert(L, i+1, rnum);下次用函数调用
+//L.elem[L.length - 1] = rnum;
+ListInsertValues(L, rnum);
+}
+}
+}
+}
+return OK;
+}*/
 void main()
 {
 	int c = 0;//switch选择参数
@@ -200,18 +224,19 @@ void main()
 		printf("|-9.顺序表的按值插入---------|\n");
 		printf("|-10.顺序表A的初始化并建立---|\n");//完成
 		printf("|-11.线性表的和并------------|\n");//完成
+											 //printf("|-12.线性表的有序和并--------|\n");
 		printf("|-12.退出--------------------|\n");//完成
 		printf("———————————————\n");
 		scanf_s("%d", &c);
 		switch (c)
 		{
-		case 1: if ( InitList(MyList) == OK)
-					printf("初始化成功\n");
+		case 1: if (InitList(MyList) == OK)
+			printf("初始化成功\n");
 				else
 					printf("初始化失败\n"); break;
 
-		case 2:	
-			
+		case 2:
+
 			if (Creat(MyList) == ERROR)
 			{
 				printf("顺序表建立不成功\n");
@@ -221,14 +246,14 @@ void main()
 				printf("顺序表建立成功\n");
 				Display(MyList);
 			}
-				break;
+			break;
 		case 3:
 			printf("请输入你要取值的位置：");
 			scanf_s("%d", &pos);
-			if (GetElem(MyList,pos,rnum) == OK)
+			if (GetElem(MyList, pos, rnum) == OK)
 			{
 				printf("取值成功\n");
-				printf("找到第%d的值为%d\n", pos,rnum);
+				printf("找到第%d的值为%d\n", pos, rnum);
 
 			}
 			else
@@ -238,7 +263,7 @@ void main()
 			break;
 		case 4:
 			printf("请输入你要插入的数据：");
-			scanf_s("%d",&x);
+			scanf_s("%d", &x);
 			printf("\n请输入你要插入的位置：");
 			scanf_s("%d", &pos);
 			if (ListInsert(MyList, pos, x) == OK)
@@ -253,12 +278,12 @@ void main()
 			}
 			break;
 		case 5:
-			Long=Length(MyList);
-			printf("线性表的长度为%d\n",Long);
+			Long = Length(MyList);
+			printf("线性表的长度为%d\n", Long);
 			break;
 		case 6:
 			printf("输入你要删除的位置：");
-			scanf_s("%d",&del);
+			scanf_s("%d", &del);
 			if (ListDelete(MyList, del) == OK)
 			{
 				printf("删除成功");
@@ -279,7 +304,7 @@ void main()
 			else
 			{
 				Locate = LocateElem(MyList, Lnum);
-				printf("%d在表中第%d个\n",Lnum,Locate);
+				printf("%d在表中第%d个\n", Lnum, Locate);
 				printf("查询成功\n");
 			}
 			break;
@@ -332,7 +357,17 @@ void main()
 				printf("顺序表合并不成功\n");
 			}
 			break;
-
+			/*case 12:
+			if (ListhebingValues(MyList, MyList1) == OK)
+			{
+			printf("顺序表合并成功\n");
+			Display(MyList);
+			}
+			else
+			{
+			printf("顺序表合并不成功\n");
+			}
+			break;*/
 		case 12:
 			exit(OK); break;
 
