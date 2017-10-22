@@ -159,43 +159,35 @@ int HEBING(SqList &L, SqList A)
 				GetElem(A, j, rnum);
 				if (!LocateElem(L, rnum))
 				{
-					//L.length++;
-					ListInsert(L, L.length + 1, rnum);//下次用函数调用i+1
-													  //L.elem[i] = rnum;
-													  //L.length++;
+					ListInsert(L, L.length + 1, rnum);
 				}
-
-
 			}
 		}
 	}
 	return OK;
 }
 //-----12.两个线性表的有序合并——————
-/*int ListhebingValues(SqList &L, SqList A)
+int ListhebingValues(SqList &L, SqList A)
 {
-if (L.length == MAXSIZE)
-return ERROR;
-int rnum = 0;
-for (int i = 0; i<A.length + L.length - 1; i++)
-{
-if (i >L.length)
-{
-for (int j = 0; j<A.length - 1; j++)
-{
-GetElem(A, j + 1, rnum);
-if (!LocateElem(L, rnum))
-{
-L.length++;
-//ListInsert(L, i+1, rnum);下次用函数调用
-//L.elem[L.length - 1] = rnum;
-ListInsertValues(L, rnum);
+	if (L.length == MAXSIZE)
+		return ERROR;
+	int rnum = 0;
+	for (int i = 0; i<A.length + L.length - 1; i++)
+	{
+		if (i >L.length - 1)
+		{
+			for (int j = 1; j <= A.length; j++)
+			{
+				GetElem(A, j, rnum);
+				if (!LocateElem(L, rnum))
+				{
+					ListInsertValues(L, rnum);
+				}
+			}
+		}
+	}
+	return OK;
 }
-}
-}
-}
-return OK;
-}*/
 void main()
 {
 	int c = 0;//switch选择参数
@@ -224,8 +216,8 @@ void main()
 		printf("|-9.顺序表的按值插入---------|\n");
 		printf("|-10.顺序表A的初始化并建立---|\n");//完成
 		printf("|-11.线性表的和并------------|\n");//完成
-											 //printf("|-12.线性表的有序和并--------|\n");
-		printf("|-12.退出--------------------|\n");//完成
+		printf("|-12.线性表的有序和并--------|\n");
+		printf("|-13.退出--------------------|\n");//完成
 		printf("———————————————\n");
 		scanf_s("%d", &c);
 		switch (c)
@@ -357,7 +349,7 @@ void main()
 				printf("顺序表合并不成功\n");
 			}
 			break;
-			/*case 12:
+			case 12:
 			if (ListhebingValues(MyList, MyList1) == OK)
 			{
 			printf("顺序表合并成功\n");
@@ -367,8 +359,8 @@ void main()
 			{
 			printf("顺序表合并不成功\n");
 			}
-			break;*/
-		case 12:
+			break;
+		case 13:
 			exit(OK); break;
 
 		default:
