@@ -16,7 +16,6 @@
 
 typedef struct Student		//定义学生结构体 
 {
-	int No;					/*序号*/
 	int Sno;				/*学号*/
 	char Name[20] = { '\0' };			/*姓名*/
 	float Mscore;		/*数学成绩*/
@@ -35,9 +34,7 @@ int InitList(SqList &L)
 {
 	for (int i = 0; i <=MAXSIZE; i++)
 	{
-		L.elem[i].No = NULL;
 		L.elem[i].Sno = NULL;
-		//L.elem[i].Name = '0';
 		L.elem[i].Cscore = NULL;
 		L.elem[i].Escore = NULL;
 		L.elem[i].Mscore = NULL;
@@ -50,23 +47,44 @@ int InitList(SqList &L)
 /*═══════╗
 ║输入学生信息  ║
 ╚═══════*/
-void stu_ifo(int i,SqList &L)
+void stu_ifo(int i,SqList &L)			//i插入的位置
 {
+	int length = L.length;
 	printf("输入第%d个学生\n", i);
-	L.elem[i].No = i;
 	while (1)
 	{
+		int sno=0;
 		printf("请输入学号：");
-		scanf("%d", &L.elem[i].Sno);
-		if (L.elem[i].Sno <= 0)
+		int flag = 0;
+		scanf("%d", &sno);
+		
+		for (int j = 1; j <= length; j++)
 		{
-			printf("学号输入错误，数学成绩应大于0,");
+			if (L.elem[j].Sno == sno)
+			{
+				printf("学号输入错误，该学号已存在，");
+				flag = 1;
+				break;
+			}
+		}
+		/*bug:输入的学号非数字值，未能有错误提示也未重新赋值*/
+		if (flag == 1)	continue;
+		else if (sno <= 0)			//学号不为零 
+		{
+			printf("学号输入错误,学号应该大于0,");
+			flag = 1;
+			
 		}
 		else
+		{
+			L.elem[i].Sno = sno;
 			break;
+		}
+		
 	}
 	printf("请输入姓名：");
 	scanf("%s", &L.elem[i].Name);
+	
 	while (1)
 	{
 		printf("请输入数学成绩：");
@@ -110,15 +128,13 @@ int StuCreat(SqList &L)
 	int a;
 	int flag;
 	L.length=0;
-	L.elem->No = 0;
 	printf("输入班级人数：");
 	scanf("%d",&a);
 	if(a<1||a>MAXSIZE)
 		return ERROR;
 	for(int i=1;i<=a;i++)
 	{
-		stu_ifo(i,L);
-	
+		stu_ifo(i,L);		//i 位置
 		L.length++;
 		printf("继续输入请按1，返回上一级菜单请按2，退出请按0: ");
 		scanf("%d", &flag);
@@ -126,7 +142,6 @@ int StuCreat(SqList &L)
 		if (flag == 0) {
 			exit(0);
 		}
-
 		if (flag == 1) {
 			continue;
 		}
@@ -136,24 +151,36 @@ int StuCreat(SqList &L)
 			break;
 		}
 	}
-	
 }
 /*══════════════════╗
 ║ 逐个显示学生表中所有学生的相关信息 ║
 ╚══════════════════*/
-int Display(SqList &L)
+int Display(SqList &L,int star,int end,int index)	//star开始显示的位置  end结束显示的位置	flag 功能 0普通显示 1查询显示
 {
 	int flag;
+	
 	printf("/*════════════════════════╗\n");
 	printf("║                   学生信息                     ║\n");
 	printf("║————————————————————————║\n");
 	printf("║ 序号 |学号 |  姓名  | 语文成绩 | 数学成绩 | 英语成绩 ║\n");
-
-	for(int i=1;i<=L.length;i++)
+	if(index==0)
 	{
-		printf("║————————————————————————║\n");
-		printf("║%d |%d  | %s |  %.2f  |  %.2f   |  %.2f   ║\n",L.elem[i].No,L.elem[i].Sno,L.elem[i].Name,L.elem[i].Cscore,L.elem[i].Mscore,L.elem[i].Escore);
+		for (int i = star; i <= end; i++)
+		{
+			printf("║————————————————————————║\n");
+			printf("║%d |%d  | %s |  %.2f  |  %.2f   |  %.2f   ║\n", i, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
+		}
 	}
+	if (index == 1)
+	{
+		for (int i = star; i <= end; i++)
+		{
+			int no = 1;
+			printf("║————————————————————————║\n");
+			printf("║%d |%d  | %s |  %.2f  |  %.2f   |  %.2f   ║\n",no , L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
+		}
+	}
+	
 	printf("╚════════════════════════*/\n");
 	printf("返回上一级菜单请按1，退出请按0: ");
 		scanf("%d", &flag);
@@ -164,14 +191,13 @@ int Display(SqList &L)
 
 		if (flag == 1) 
 		{
-			
 			return OK;
 		}
 }
 /*════════════════════╗
 ║ 给定一个学生信息，插入到表中指定的位置 ║
 ╚════════════════════*/
-int Insert(SqList &L)
+int Insert(SqList &L)//
 {
 	while (1)
 	{
@@ -179,35 +205,33 @@ int Insert(SqList &L)
 		int index;
 		printf("输入你想插入的位置：");
 		scanf("%d", &index);
-		
-		if ((index < 1) || (index > L.length + 1))
+		int length = L.length;
+		if ((index < 1) || (index > length + 1))
 			return ERROR;
 		if(	 (L.length>= MAXSIZE))
 			return ERROR;
-		if (index == L.length+1)
+		if (index == length+1)						//末端插入新值
 		{
 			L.length=L.length+1;
 			for (int i = index ; i <= index ; i++)
 			{
-				stu_ifo(i, L);
+				stu_ifo(i, L);						//i插入的位置
 			}
 		}
 		else
 		{
-			for (int i = L.length; i >= 0; i--)
+			L.elem[0] = L.elem[index];
+			for (int i = L.length; i >= 0; i--)					//移位 
 			{
-				if (i < index)
+				if (i <= index)
 					break;
 				else
 				{
-					L.elem[i + 1].Sno=L.elem[i].Sno;
-					strcpy(L.elem[i + 1].Name, L.elem[i].Name);		//strcmp函数，比较两个字符串
-					L.elem[i + 1].No = L.elem[i].No + 1;
-					L.elem[i + 1].Cscore = L.elem[i].Cscore;
-					L.elem[i + 1].Escore = L.elem[i].Escore;
-					L.elem[i + 1].Mscore = L.elem[i].Mscore;
+					L.elem[i + 1] = L.elem[i];
 				}
 			}
+			L.elem[index+1] = L.elem[0];
+			L.elem[index].Sno = NULL;
 			L.length++;
 			for (int i = index; i <= index; i++)
 			{
@@ -236,44 +260,49 @@ int Insert(SqList &L)
 /*════════════╗
 ║ 删除指定位置的学生记录 ║
 ╚════════════*/
-int Delete(SqList &L)	
+int Delete(SqList &L)
 {
 	int flag;
 	int i;
-	int num=0;
-	printf("请输入你要删除数据的学号：");
-	scanf("%d",&i);
-	for (int j=0; j <=L.length; j++)
+	int num = 0;
+	while (1)
 	{
-		if (L.elem[j].Sno == i)	
+		printf("请输入你要删除数据的学号：");
+		scanf("%d", &i);
+		for (int j = 0; j <= L.length; j++)
 		{
-			num = L.elem[j].No;
-			break;
+			if (L.elem[j].Sno == i)
+			{
+				num = j;
+				break;
+			}
 		}
-	}
-	if (num==0)
-		return ERROR;
-	else
-	{
-		for (int k = num; k < L.length; k++)
+		if (num == 0)
+			return ERROR;
+		else
 		{
-			L.elem[k] = L.elem[k + 1];
-			L.elem[k].No = L.elem[k].No - 1;
+			for (int k = num; k < L.length; k++)
+			{
+				L.elem[k] = L.elem[k + 1];
+			}
+			L.length--;
 		}
-		L.length--;
-	}
-	printf("删除成功\n");
-	printf("返回上一级菜单请按1，退出请按0: ");
-	scanf("%d", &flag);
-	
-	if (flag == 0)
-	{
-		exit(0);
-	}
+		printf("删除成功\n");
+		printf("删除插入请按 1，返回上一级菜单请按2，退出请按0: ");
+		scanf("%d", &flag);
 
-	if (flag == 1)
-	{
-		return OK;
+		if (flag == 0)
+		{
+			exit(0);
+		}
+		if (flag == 1)
+		{
+			continue;
+		}
+		if (flag == 2)
+		{
+			return OK;
+		}
 	}
 }
 /*═════════╗
@@ -283,6 +312,7 @@ int count(SqList &L)
 {
 	int flag;
 	int a;
+	printf("统计成功，");
 	printf("表中学生个数为：%d\n", L.length);
 	printf("返回上一级菜单请按1，退出请按0: ");
 	scanf("%d", &flag);
@@ -298,7 +328,7 @@ int count(SqList &L)
 	}
  } 
 /*══════════════════╗
-║ 根据姓名（或者学号）进行顺序查找； ║
+║ 根据姓名（或者学号）进行顺序查找   ║
 ╚══════════════════*/
 int order(SqList &L)
 {
@@ -330,14 +360,8 @@ int order(SqList &L)
 					{
 						if (strcmp(L.elem[i].Name, sname) == 0)	//strcmp函数，比较两个字符串
 						{
-							num = L.elem[i].No;
-							printf("/*════════════════════════╗\n");
-							printf("║                   学生信息                     ║\n");
-							printf("║————————————————————————║\n");
-							printf("║ 序号 |学号 |  姓名  | 语文成绩 | 数学成绩 | 英语成绩 ║\n");
-							printf("║————————————————————————║\n");
-							printf("║ %d |%d  | %s |  %.2f  |  %.2f   |  %.2f   ║\n",L.elem[i].No, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
-							printf("╚════════════════════════*/\n");
+							num = i;
+							Display(L, i, i,1);
 							return OK;
 						}
 					}
@@ -359,18 +383,12 @@ int order(SqList &L)
 				}
 				else
 				{
-					for (int i = 0; i <= L.length; i++)
+					for (int j = 1; j <= L.length; j++)
 					{
-						if (L.elem[i].Sno == sno)	//strcmp函数，比较两个字符串
+						if (L.elem[j].Sno == sno)	
 						{
-							num = L.elem[i].No;
-							printf("/*════════════════════════╗\n");
-							printf("║                   学生信息                     ║\n");
-							printf("║————————————————————————║\n");
-							printf("║ 序号 | 学号 |  姓名  | 语文成绩 | 数学成绩 | 英语成绩 ║\n");
-							printf("║————————————————————————║\n");
-							printf("║ %d |%d  | %s |  %.2f  |  %.2f   |  %.2f   ║\n", L.elem[i].No, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
-							printf("╚════════════════════════*/\n");
+							num = j;
+							Display(L, j, j,1);
 							return OK;
 						}
 					}
@@ -380,29 +398,196 @@ int order(SqList &L)
 						return ERROR;
 					}
 				}
-
 			}
 			default:
 				printf("输入错误请重新输入\n");
 		}
 	}
 }
+/*══════════════════╗
+║ 利用直接插入排序按照学号进行排序   ║
+╚══════════════════*/
+int StraightInsertionSort(SqList &L)	//学号从小到大的顺序排     序号有问题待调整
+{
+	int i, j;
+	for(i=2;i<=L.length;i++)			//循环从第二个数开始
+	{
+		if(L.elem[i].Sno < L.elem[i - 1].Sno)
+		{
+			L.elem[0] = L.elem[i];
+			L.elem[i] = L.elem[i - 1];
+		
+			for(j = i - 2; L.elem[0].Sno < L.elem[j].Sno; --j)
+			{
+				L.elem[j + 1] = L.elem[j];
+			}
+			L.elem[j + 1] = L.elem[0];
+		}
+	}
+	Display(L,1,L.length,0);
+	
+	return OK;
+}
+/*══════════════════╗
+║ 利用冒泡排序按照数学成绩进行排序   ║
+╚══════════════════*/
+int BubbleSort(SqList &L)
+{
+	int m=L.length;
+	int flag = 1;
+	while((flag==1)&&(m>0))
+	{
+		flag = 0;
+		for (int j = 1; j < m; j++)
+		{
+			if (L.elem[j].Mscore > L.elem[j + 1].Mscore)
+			{
+				flag = 1;
+				L.elem[0] = L.elem[j];
+				L.elem[j] = L.elem[j + 1];
+				L.elem[j + 1] = L.elem[0];
+			}
+		}
+		--m;
+	}
+	Display(L,1,L.length,0);
+	return OK;
+}
+/*═══════════════════╗
+║ 利用简单选择排序按照语文成绩进行排序 ║
+╚═══════════════════*/
+int SimpleSelectionSort(SqList &L)
+{
+	Stu min[MAXSIZE] = { '\0' };
+	//Stu empty[MAXSIZE] = { '\0' };
+	for (int i = 1; i <= L.length; i++)
+	{
+		min[i] = L.elem[i];
+		for (int j = i + 1; j <= L.length; j++)
+		{
+			if (L.elem[j].Cscore < min[i].Cscore)			//找出最小值
+			{
+				min[i] = L.elem[j];
+			}
+			if (min[i].Cscore != L.elem[i].Cscore)
+			{
+				L.elem[0] = L.elem[i];
+				L.elem[i] = min[i];						//把最小值移到最前
+				L.elem[j] = L.elem[0];
+			}
 
-//(7)  利用直接插入排序按照学号进行排序；
+		}
+	}
+	Display(L,1,L.length,0);
+	printf("排序成功\n");
+	return OK;
+}
 
-//(8)  利用冒泡排序按照数学成绩进行排序；
+/*══════════════════╗
+║ 利用快速排序按照英语成绩进行排序   ║
+╚══════════════════*/
+//用书上的视频的写法写的，等老师讲过这个算法之后在改写，2018再见把(*^_^*)
+int Partition(SqList &L,int low,int high)
+{
+	L.elem[0] = L.elem[low];
+	int pivotkey = L.elem[low].Escore;
+	while (low < high)
+	{
+		while ((low < high) && (L.elem[high].Escore >= pivotkey))
+		{
+			--high;
+		}
+		L.elem[low] = L.elem[high];
+		while ((low < high) && (L.elem[low].Escore <= pivotkey))
+		{
+			++low;
+		}
+		L.elem[high] = L.elem[low];
+	}
+	L.elem[low] = L.elem[0];
+	return low;
+	//L.elem[low].Escore = pivotkey;
+}
+int QSort(SqList &L, int low, int high)
+{
+	if (low < high)
+	{
+		int pivotloc = Partition(L, low, high);
+		Partition(L, low, pivotloc - 1);
+		Partition(L, pivotloc + 1, high);
+	}
+	return OK;
+}
+/*════════════════════════════╗
+║ 根据学号进行折半查找，成功返回此学生的姓名和各科成绩   ║
+╚════════════════════════════*/
+int binsearch(SqList &L)
+{
+	
+	int k = 0;							//目标学号
+	int No = -1;						//目标所在的序号
+	printf("输入你要查询的学号：");
+	scanf("%d", &k);
+	if (k <= 0)
+		return ERROR;
+	for (int i = 2; i <= L.length; i++)	//折半插入排序
+	{
+		L.elem[0] = L.elem[i];
+		int low = 1;					//最小值
+		int high = i-1;			//最大值
+		int mid;						//中间值
+		while (low <= high)
+		{
+			mid = (low + high) / 2;//low + ((high - low) / 2);
+			/*if (L.elem[mid].Sno =)
+				return mid;*/
+			if (L.elem[0].Sno < L.elem[mid].Sno)
+				high = mid - 1;
+			else
+				low = mid + 1;
+		}
+		for (int j = i - 1; j >= high; j--)
+		{
+			L.elem[j + 1] = L.elem[j];	//后移
+		}
+		L.elem[high + 1] = L.elem[0];	//插入
+	}
+	//Display(L, 1, L.length);
+	int low = 1;						//最小值
+	int high = L.length;				//最大值
+	int mid=0;							//中间值
+	while (low <= high)					//折半查找
+	{
+		if (L.elem[low].Sno == k)
+			return low;
+		if (L.elem[high].Sno == k)
+			return high;
 
-//(9)  利用简单选择排序按照语文成绩进行排序；
+		mid = low + ((high - low) / 2);	//避免发生溢出
 
-//(10)  利用快速排序按照英语成绩进行排序；
+		if (L.elem[mid].Sno == k)
+			return mid;
+		if (L.elem[mid].Sno < k)
+			low = mid + 1;
+		else
+			high = mid + 1;
+	}
+	if (No == -1)
+		return ERROR;
+	else
+	{
+		printf("排序成功\n");
+		return k;
+	}
+}
 
-//(11) 根据学号进行折半查找，成功返回此学生的姓名和各科成绩。
+
 
 int main()
 {
 	SqList Students;
-	int c = 0;
-
+	int c = 0;				//选择功能
+	int k = 0;				//返回数据所在位置
 	if (InitList(Students) == OK)
 		printf("初始化成功\n");
 	else
@@ -412,16 +597,16 @@ int main()
 	{
 		printf("/*═════════════════════════════════════╗\n");
 		printf("║       1 根据指定学生个数，逐个输入学生信息                               ║\n");//完成√
-		printf("║       2 逐个显示学生表中所有学生的相关信息                               ║\n");//完成√
+		printf("║       2 逐个显示学生表中所有学生的相关信息                               ║\n");//完成√	
 		printf("║       3 给定一个学生信息，插入到表中指定的位置                           ║\n");//完成√
-		printf("║       4 删除指定位置的学生记录                                           ║\n");//完成√
+		printf("║       4 删除指定学号的学生记录                                           ║\n");//完成√
 		printf("║       5 统计表中学生个数                                                 ║\n");//完成√
 		printf("║       6 根据姓名（或者学号）进行顺序查找                                 ║\n");//完成√
-		printf("║       7 利用直接插入排序按照学号进行排序                                 ║\n");
-		printf("║       8 利用冒泡排序按照数学成绩进行排序                                 ║\n");
-		printf("║       9 利用简单选择排序按照语文成绩进行排序                             ║\n");
-		printf("║       10 利用快速排序按照英语成绩进行排序                                ║\n");
-		printf("║       11 根据学号进行折半查找，成功返回此学生的姓名和各科成绩            ║\n");
+		printf("║       7 利用直接插入排序按照学号进行排序                                 ║\n");//完成√	
+		printf("║       8 利用冒泡排序按照数学成绩进行排序                                 ║\n");//完成√	
+		printf("║       9 利用简单选择排序按照语文成绩进行排序                             ║\n");//完成√	
+		printf("║       10 利用快速排序按照英语成绩进行排序                                ║\n");//完成√	
+		printf("║       11 根据学号进行折半查找，成功返回此学生的姓名和各科成绩            ║\n");//完成√
 		printf("╚═════════════════════════════════════*/\n");
 		printf("请选择功能：");
 		scanf("%d", &c);
@@ -437,36 +622,52 @@ int main()
 				printf("创建失败(┬＿┬)\n");
 			break;
 		case 2:
-			if( Display(Students)==OK)
+			if( Display(Students,1,Students.length,0)==OK)
 				printf("显示完毕\n");
 			break;
 		case 3:
 			
-			if(Insert(Students)==ERROR)
+			if (Insert(Students) == ERROR)
 				printf("插入失败\n");
+			else
+				Display(Students, 1, Students.length,0);
 			break;
 		case 4:
 			if (Delete(Students) == ERROR)
 				printf("删除失败，学号不存在\n");
+			else
+				Display(Students, 1, Students.length,0);
 			break;
 		case 5:
-			if (count(Students) == OK)
-				printf("统计成功\n");
-			else
-				printf("统计失败\n");
+			count(Students);
 			break;
 		case 6:
 			order(Students);
 			break;
 		case 7:
+			StraightInsertionSort(Students);
 			break;
 		case 8:
+			BubbleSort(Students);		
 			break;
 		case 9:
+			SimpleSelectionSort(Students);
 			break;
 		case 10:
+			if (QSort(Students, 1, Students.length) == OK)
+			{
+				printf("排序成功！\n");
+				Display(Students, 1, Students.length,0);
+			}
 			break;
 		case 11:
+			k = binsearch(Students);
+			if(k==ERROR)
+				printf("查询失败，该学号不存在\n");
+			else
+			{
+				Display(Students, k, k,1);
+			}
 			break;
 		case 12:
 			exit(OK);
