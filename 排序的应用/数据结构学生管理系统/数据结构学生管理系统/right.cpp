@@ -67,7 +67,12 @@ void stu_ifo(int i,SqList &L)			//i²åÈëµÄÎ»ÖÃ
 				break;
 			}
 		}
-		/*bug:ÊäÈëµÄÑ§ºÅ·ÇÊý×ÖÖµ£¬Î´ÄÜÓÐ´íÎóÌáÊ¾Ò²Î´ÖØÐÂ¸³Öµ*/
+		/* bug:ÊäÈëµÄÑ§ºÅ·ÇÊý×ÖÖµ£¬Î´ÄÜÓÐ´íÎóÌáÊ¾Ò²Î´ÖØÐÂ¸³Öµ
+		 * ÐÞ¸Ä·½°¸£º°ÑÑ§ºÅ»»³ÉcharÐÍ£¬ÀûÓÃStringº¯ÊýÖÐµÄº¯Êý±È½ÏÃ¿¸ö×Ö·ûÊÇ·ñÊÇÊý×Ö£¬²»ÊÇ·µ»Ø´íÎóÐÅÏ¢²¢ÌáÊ¾ÖØÐÂÊäÈë
+		 * ÆäÖÐ²éÑ¯ÖÐÒ²ÒªÊ¹ÓÃStringº¯ÊýÖÐµÄ±È½ÏÀ´Íê³É²éÕÒ
+		 * ÓÉÓÚÐÞ¸Ä¹¤³ÌºÆ´ó£¬´Ë¹¦ÄÜµÈµ½2018ÆÚÄ©¿¼ÍêÔÙÐÞ¸Ä QYQ
+		 * emnmnm¾ÍÕâÑù°É£¬ÐÂÄê¿ìÀÖ£¬ÔÙ¼û2017
+		*/
 		if (flag == 1)	continue;
 		else if (sno <= 0)			//Ñ§ºÅ²»ÎªÁã 
 		{
@@ -125,7 +130,7 @@ void stu_ifo(int i,SqList &L)			//i²åÈëµÄÎ»ÖÃ
 ¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/
 int StuCreat(SqList &L)
 {
-	int a;
+	int a;	//°à¼¶ÈËÊý
 	int flag;
 	L.length=0;
 	printf("ÊäÈë°à¼¶ÈËÊý£º");
@@ -136,21 +141,33 @@ int StuCreat(SqList &L)
 	{
 		stu_ifo(i,L);		//i Î»ÖÃ
 		L.length++;
+	}
+	while (true)
+	{
 		printf("¼ÌÐøÊäÈëÇë°´1£¬·µ»ØÉÏÒ»¼¶²Ëµ¥Çë°´2£¬ÍË³öÇë°´0: ");
 		scanf("%d", &flag);
-		
 		if (flag == 0) {
 			exit(0);
 		}
-		if (flag == 1) {
-			continue;
-		}
+		else if (flag == 1) {
+			if (L.length == a)
+			{
 
-		if (flag == 2) {
-			return OK;
+				printf("\nÄãµ±Ç°ÒÑ´æÈËÊýÒÑ´ïµ½ÄãÉè¶¨µÄÉÏÏÞ£¬²»ÄÜÔÙÂ¼ÈëÑ§ÉúÐÅÏ¢£¬\n\nÈçÐè¼ÌÐø²åÈëÑ§Éú,Çë·µ»ØÉÏÒ»¼¶²Ëµ¥£¬\n\nÑ¡Ôñ²åÈë¹¦ÄÜ»òÑ¡Ôñ±¾¹¦ÄÜ£¬ÖØÐÂÂ¼ÈëÑ§ÉúÐÅÏ¢\n\n");
+				printf("ÊäÈë¹¦ÄÜ´íÎó,ÇëÖØÐÂÊäÈë\n");
+				continue;
+			}
+			else
 			break;
 		}
+
+		else if (flag == 2) {
+			return OK;
+		}
+		else
+			printf("ÊäÈë¹¦ÄÜ´íÎó,ÇëÖØÐÂÊäÈë\n");
 	}
+
 }
 /*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
 ¨U Öð¸öÏÔÊ¾Ñ§Éú±íÖÐËùÓÐÑ§ÉúµÄÏà¹ØÐÅÏ¢ ¨U
@@ -159,16 +176,21 @@ int Display(SqList &L,int star,int end,int index)	//star¿ªÊ¼ÏÔÊ¾µÄÎ»ÖÃ  end½áÊøÏ
 {
 	int flag;
 	
-	printf("/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[\n");
-	printf("¨U                   Ñ§ÉúÐÅÏ¢                     ¨U\n");
-	printf("¨U¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¨U\n");
+	printf("/*-----------------------------------------------------¨[\n");
+	printf("¨U                       Ñ§ÉúÐÅÏ¢                       ¨U\n");
+	printf("¨U------------------------------------------------------¨U\n");
 	printf("¨U ÐòºÅ |Ñ§ºÅ |  ÐÕÃû  | ÓïÎÄ³É¼¨ | ÊýÑ§³É¼¨ | Ó¢Óï³É¼¨ ¨U\n");
 	if(index==0)
 	{
 		for (int i = star; i <= end; i++)
 		{
-			printf("¨U¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¨U\n");
-			printf("¨U%d |%d  | %s |  %.2f  |  %.2f   |  %.2f   ¨U\n", i, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
+			printf("¨U------------------------------------------------------¨U\n");
+			if(strlen(L.elem[i].Name) ==4)
+			{
+				printf("¨U   %d  | %d |  %s  |   %.2f  |   %.2f  |   %.2f  ¨U\n", i, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
+			}
+			else
+				printf("¨U   %d  | %d | %s |   %.2f  |   %.2f  |   %.2f  ¨U\n", i, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
 		}
 	}
 	if (index == 1)
@@ -176,23 +198,34 @@ int Display(SqList &L,int star,int end,int index)	//star¿ªÊ¼ÏÔÊ¾µÄÎ»ÖÃ  end½áÊøÏ
 		for (int i = star; i <= end; i++)
 		{
 			int no = 1;
-			printf("¨U¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¨U\n");
-			printf("¨U%d |%d  | %s |  %.2f  |  %.2f   |  %.2f   ¨U\n",no , L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
+			printf("¨U------------------------------------------------------¨U\n");
+			if (strlen(L.elem[i].Name) == 4)
+			{
+				printf("¨U   %d  | %d |  %s  |   %.2f  |   %.2f  |   %.2f  ¨U\n", no, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
+			}
+			else
+				printf("¨U   %d  | %d | %s |   %.2f  |   %.2f  |   %.2f  ¨U\n", no, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
 		}
 	}
 	
-	printf("¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/\n");
-	printf("·µ»ØÉÏÒ»¼¶²Ëµ¥Çë°´1£¬ÍË³öÇë°´0: ");
+	printf("¨^-------------------------------------------------------*/\n");
+	while (true)
+	{
+		printf("·µ»ØÉÏÒ»¼¶²Ëµ¥Çë°´1£¬ÍË³öÇë°´0: ");
 		scanf("%d", &flag);
-		if (flag == 0) 
+		if (flag == 0)
 		{
 			exit(0);
 		}
 
-		if (flag == 1) 
+		else if (flag == 1)
 		{
 			return OK;
 		}
+		else
+			printf("¹¦ÄÜÑ¡Ôñ´íÎó£¬ÇëÖØÐÂÊäÈë\n");
+	}
+	
 }
 /*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
 ¨U ¸ø¶¨Ò»¸öÑ§ÉúÐÅÏ¢£¬²åÈëµ½±íÖÐÖ¸¶¨µÄÎ»ÖÃ ¨U
@@ -239,21 +272,27 @@ int Insert(SqList &L)//
 			}
 		}
 		printf("²åÈë³É¹¦\n");
-		printf("¼ÌÐø²åÈëÇë°´1£¬·µ»ØÉÏÒ»¼¶²Ëµ¥Çë°´2£¬ÍË³öÇë°´0: ");
-		scanf("%d", &flag);
-
-		if (flag == 0)
+		
+		while (true)
 		{
-			exit(0);
+			printf("¼ÌÐø²åÈëÇë°´1£¬·µ»ØÉÏÒ»¼¶²Ëµ¥Çë°´2£¬ÍË³öÇë°´0: ");
+			scanf("%d", &flag);
+			if (flag == 0)
+			{
+				exit(0);
+			}
+			else if (flag == 1)
+			{
+				break;
+			}
+			else if (flag == 2)
+			{
+				return OK;
+			}
+			else
+				printf("¹¦ÄÜÑ¡Ôñ´íÎó£¬ÇëÖØÐÂÊäÈë\n");
 		}
-		if (flag == 1)
-		{
-			continue;
-		}
-		if (flag == 2)
-		{
-			return OK;
-		}
+		
 	}
 }
 
@@ -288,21 +327,27 @@ int Delete(SqList &L)
 			L.length--;
 		}
 		printf("É¾³ý³É¹¦\n");
-		printf("É¾³ý²åÈëÇë°´ 1£¬·µ»ØÉÏÒ»¼¶²Ëµ¥Çë°´2£¬ÍË³öÇë°´0: ");
-		scanf("%d", &flag);
-
-		if (flag == 0)
+		
+		while(1)
 		{
-			exit(0);
+			printf("É¾³ý²åÈëÇë°´ 1£¬·µ»ØÉÏÒ»¼¶²Ëµ¥Çë°´2£¬ÍË³öÇë°´0: ");
+			scanf("%d", &flag);
+			if (flag == 0)
+			{
+				exit(0);
+			}
+			else if (flag == 1)
+			{
+				break;
+			}
+			else if (flag == 2)
+			{
+				return OK;
+			}
+			else
+				printf("¹¦ÄÜÑ¡Ôñ´íÎó£¬ÇëÖØÐÂÊäÈë\n");
 		}
-		if (flag == 1)
-		{
-			continue;
-		}
-		if (flag == 2)
-		{
-			return OK;
-		}
+		
 	}
 }
 /*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
@@ -314,18 +359,24 @@ int count(SqList &L)
 	int a;
 	printf("Í³¼Æ³É¹¦£¬");
 	printf("±íÖÐÑ§Éú¸öÊýÎª£º%d\n", L.length);
-	printf("·µ»ØÉÏÒ»¼¶²Ëµ¥Çë°´1£¬ÍË³öÇë°´0: ");
-	scanf("%d", &flag);
-	if (flag == 0)
+	while(1)
 	{
-		exit(0);
-	}
+		printf("·µ»ØÉÏÒ»¼¶²Ëµ¥Çë °´1£¬ÍË³ö Çë°´0: ");
+		scanf("%d", &flag);
+		if (flag == 0)
+		{
+			exit(0);
+		}
 
-	if (flag == 1)
-	{
+		else if (flag == 1)
+		{
 
-		return OK;
+			return OK;
+		}
+		else
+			printf("¹¦ÄÜÑ¡Ôñ´íÎó£¬ÇëÖØÐÂÊäÈë\n");
 	}
+	
  } 
 /*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
 ¨U ¸ù¾ÝÐÕÃû£¨»òÕßÑ§ºÅ£©½øÐÐË³Ðò²éÕÒ   ¨U
@@ -345,7 +396,6 @@ int order(SqList &L)
 		{
 			case 0:
 			{
-				
 				printf("ÊäÈëÄãÒª²éÕÒµÄÐÕÃû£º");
 				scanf("%s", sname);
 				if (!strcmp(sname, "\0"))
@@ -425,7 +475,7 @@ int StraightInsertionSort(SqList &L)	//Ñ§ºÅ´ÓÐ¡µ½´óµÄË³ÐòÅÅ     ÐòºÅÓÐÎÊÌâ´ýµ÷Õû
 		}
 	}
 	Display(L,1,L.length,0);
-	
+	printf("ÅÅÐò³É¹¦\n");
 	return OK;
 }
 /*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
@@ -451,6 +501,7 @@ int BubbleSort(SqList &L)
 		--m;
 	}
 	Display(L,1,L.length,0);
+	printf("ÅÅÐò³É¹¦\n");
 	return OK;
 }
 /*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
@@ -506,7 +557,6 @@ int Partition(SqList &L,int low,int high)
 	}
 	L.elem[low] = L.elem[0];
 	return low;
-	//L.elem[low].Escore = pivotkey;
 }
 int QSort(SqList &L, int low, int high)
 {
@@ -539,8 +589,6 @@ int binsearch(SqList &L)
 		while (low <= high)
 		{
 			mid = (low + high) / 2;//low + ((high - low) / 2);
-			/*if (L.elem[mid].Sno =)
-				return mid;*/
 			if (L.elem[0].Sno < L.elem[mid].Sno)
 				high = mid - 1;
 			else
@@ -552,7 +600,6 @@ int binsearch(SqList &L)
 		}
 		L.elem[high + 1] = L.elem[0];	//²åÈë
 	}
-	//Display(L, 1, L.length);
 	int low = 1;						//×îÐ¡Öµ
 	int high = L.length;				//×î´óÖµ
 	int mid=0;							//ÖÐ¼äÖµ
@@ -580,9 +627,9 @@ int binsearch(SqList &L)
 		return k;
 	}
 }
-
-
-
+/*¨T¨T¨T¨T¨T¨[
+¨U  Ö÷º¯Êý  ¨U
+¨^¨T¨T¨T¨T¨T*/
 int main()
 {
 	SqList Students;
@@ -595,7 +642,7 @@ int main()
 
 	while (1)
 	{
-		printf("/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[\n");
+		printf("/*-------------------------------------------------------------------------¨[\n");
 		printf("¨U       1 ¸ù¾ÝÖ¸¶¨Ñ§Éú¸öÊý£¬Öð¸öÊäÈëÑ§ÉúÐÅÏ¢                               ¨U\n");//Íê³É¡Ì
 		printf("¨U       2 Öð¸öÏÔÊ¾Ñ§Éú±íÖÐËùÓÐÑ§ÉúµÄÏà¹ØÐÅÏ¢                               ¨U\n");//Íê³É¡Ì	
 		printf("¨U       3 ¸ø¶¨Ò»¸öÑ§ÉúÐÅÏ¢£¬²åÈëµ½±íÖÐÖ¸¶¨µÄÎ»ÖÃ                           ¨U\n");//Íê³É¡Ì
@@ -607,7 +654,8 @@ int main()
 		printf("¨U       9 ÀûÓÃ¼òµ¥Ñ¡ÔñÅÅÐò°´ÕÕÓïÎÄ³É¼¨½øÐÐÅÅÐò                             ¨U\n");//Íê³É¡Ì	
 		printf("¨U       10 ÀûÓÃ¿ìËÙÅÅÐò°´ÕÕÓ¢Óï³É¼¨½øÐÐÅÅÐò                                ¨U\n");//Íê³É¡Ì	
 		printf("¨U       11 ¸ù¾ÝÑ§ºÅ½øÐÐÕÛ°ë²éÕÒ£¬³É¹¦·µ»Ø´ËÑ§ÉúµÄÐÕÃûºÍ¸÷¿Æ³É¼¨            ¨U\n");//Íê³É¡Ì
-		printf("¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/\n");
+		printf("¨U       12                      ÍË³ö                                       ¨U\n");//Íê³É¡Ì
+		printf("¨^--------------------------------------------------------------------------*/\n");
 		printf("ÇëÑ¡Ôñ¹¦ÄÜ£º");
 		scanf("%d", &c);
 		switch (c)
@@ -678,4 +726,3 @@ int main()
 	}
 	getchar();
 }
-
