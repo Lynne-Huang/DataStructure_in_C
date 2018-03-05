@@ -1,7 +1,6 @@
 /**
-*³ÌĞòÓÃÍ¾£ºÑ§Éú¹ÜÀíÏµÍ³
-*@author »Æ¾°ÁÕ
-*Ğ¡×é³ÉÔ±£º307»Æ¾°ÁÕ¡¢306ÎâÙ»¡¢410ÄßÎÄÓî
+*ç¨‹åºç”¨é€”ï¼šå­¦ç”Ÿç®¡ç†ç³»ç»Ÿ
+*@author é»„æ™¯ç³
 */
 #include<stdio.h>
 #include<stdlib.h>
@@ -14,22 +13,22 @@
 #define ERROR 0
 #define OVERFLOW 0
 
-typedef struct Student		//¶¨ÒåÑ§Éú½á¹¹Ìå 
+typedef struct Student		//å®šä¹‰å­¦ç”Ÿç»“æ„ä½“ 
 {
-	int Sno;				/*Ñ§ºÅ*/
-	char Name[20] = { '\0' };			/*ĞÕÃû*/
-	float Mscore;		/*ÊıÑ§³É¼¨*/
-	float Cscore;		/*ÓïÎÄ³É¼¨*/
-	float Escore;		/*Ó¢Óï³É¼¨*/
+	int Sno;				/*å­¦å·*/
+	char Name[20] = { '\0' };			/*å§“å*/
+	float Mscore;		/*æ•°å­¦æˆç»©*/
+	float Cscore;		/*è¯­æ–‡æˆç»©*/
+	float Escore;		/*è‹±è¯­æˆç»©*/
 }Stu;
 typedef struct
 {
 	Stu elem[MAXSIZE];
-	int length;			/*µ±Ç°ÒÑ´æÈËÊı*/
+	int length;			/*å½“å‰å·²å­˜äººæ•°*/
 }SqList;
-/*¨T¨T¨T¨T¨T¨T¨T¨T¨[
-¨U³õÊ¼»¯ student  ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T¨T*/
+/*â•â•â•â•â•â•â•â•â•—
+â•‘åˆå§‹åŒ– student  â•‘
+â•šâ•â•â•â•â•â•â•â•*/
 int InitList(SqList &L)
 {
 	for (int i = 0; i <=MAXSIZE; i++)
@@ -44,17 +43,17 @@ int InitList(SqList &L)
 	L.length=0;
 	return OK;
 }
-/*¨T¨T¨T¨T¨T¨T¨T¨[
-¨UÊäÈëÑ§ÉúĞÅÏ¢  ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T*/
-void stu_ifo(int i,SqList &L)			//i²åÈëµÄÎ»ÖÃ
+/*â•â•â•â•â•â•â•â•—
+â•‘è¾“å…¥å­¦ç”Ÿä¿¡æ¯  â•‘
+â•šâ•â•â•â•â•â•â•*/
+void stu_ifo(int i,SqList &L)			//iæ’å…¥çš„ä½ç½®
 {
 	int length = L.length;
-	printf("ÊäÈëµÚ%d¸öÑ§Éú\n", i);
+	printf("è¾“å…¥ç¬¬%dä¸ªå­¦ç”Ÿ\n", i);
 	while (1)
 	{
 		int sno=0;
-		printf("ÇëÊäÈëÑ§ºÅ£º");
+		printf("è¯·è¾“å…¥å­¦å·ï¼š");
 		int flag = 0;
 		scanf("%d", &sno);
 		
@@ -62,21 +61,21 @@ void stu_ifo(int i,SqList &L)			//i²åÈëµÄÎ»ÖÃ
 		{
 			if (L.elem[j].Sno == sno)
 			{
-				printf("Ñ§ºÅÊäÈë´íÎó£¬¸ÃÑ§ºÅÒÑ´æÔÚ£¬");
+				printf("å­¦å·è¾“å…¥é”™è¯¯ï¼Œè¯¥å­¦å·å·²å­˜åœ¨ï¼Œ");
 				flag = 1;
 				break;
 			}
 		}
-		/* bug:ÊäÈëµÄÑ§ºÅ·ÇÊı×ÖÖµ£¬Î´ÄÜÓĞ´íÎóÌáÊ¾Ò²Î´ÖØĞÂ¸³Öµ
-		 * ĞŞ¸Ä·½°¸£º°ÑÑ§ºÅ»»³ÉcharĞÍ£¬ÀûÓÃStringº¯ÊıÖĞµÄº¯Êı±È½ÏÃ¿¸ö×Ö·ûÊÇ·ñÊÇÊı×Ö£¬²»ÊÇ·µ»Ø´íÎóĞÅÏ¢²¢ÌáÊ¾ÖØĞÂÊäÈë
-		 * ÆäÖĞ²éÑ¯ÖĞÒ²ÒªÊ¹ÓÃStringº¯ÊıÖĞµÄ±È½ÏÀ´Íê³É²éÕÒ
-		 * ÓÉÓÚĞŞ¸Ä¹¤³ÌºÆ´ó£¬´Ë¹¦ÄÜµÈµ½2018ÆÚÄ©¿¼ÍêÔÙĞŞ¸Ä QYQ
-		 * emnmnm¾ÍÕâÑù°É£¬ĞÂÄê¿ìÀÖ£¬ÔÙ¼û2017
+		/* bug:è¾“å…¥çš„å­¦å·éæ•°å­—å€¼ï¼Œæœªèƒ½æœ‰é”™è¯¯æç¤ºä¹Ÿæœªé‡æ–°èµ‹å€¼
+		 * ä¿®æ”¹æ–¹æ¡ˆï¼šæŠŠå­¦å·æ¢æˆcharå‹ï¼Œåˆ©ç”¨Stringå‡½æ•°ä¸­çš„å‡½æ•°æ¯”è¾ƒæ¯ä¸ªå­—ç¬¦æ˜¯å¦æ˜¯æ•°å­—ï¼Œä¸æ˜¯è¿”å›é”™è¯¯ä¿¡æ¯å¹¶æç¤ºé‡æ–°è¾“å…¥
+		 * å…¶ä¸­æŸ¥è¯¢ä¸­ä¹Ÿè¦ä½¿ç”¨Stringå‡½æ•°ä¸­çš„æ¯”è¾ƒæ¥å®ŒæˆæŸ¥æ‰¾
+		 * ç”±äºä¿®æ”¹å·¥ç¨‹æµ©å¤§ï¼Œæ­¤åŠŸèƒ½ç­‰åˆ°2018æœŸæœ«è€ƒå®Œå†ä¿®æ”¹ QYQ
+		 * emnmnmå°±è¿™æ ·å§ï¼Œæ–°å¹´å¿«ä¹ï¼Œå†è§2017
 		*/
 		if (flag == 1)	continue;
-		else if (sno <= 0)			//Ñ§ºÅ²»ÎªÁã 
+		else if (sno <= 0)			//å­¦å·ä¸ä¸ºé›¶ 
 		{
-			printf("Ñ§ºÅÊäÈë´íÎó,Ñ§ºÅÓ¦¸Ã´óÓÚ0,");
+			printf("å­¦å·è¾“å…¥é”™è¯¯,å­¦å·åº”è¯¥å¤§äº0,");
 			flag = 1;
 			
 		}
@@ -87,64 +86,64 @@ void stu_ifo(int i,SqList &L)			//i²åÈëµÄÎ»ÖÃ
 		}
 		
 	}
-	printf("ÇëÊäÈëĞÕÃû£º");
+	printf("è¯·è¾“å…¥å§“åï¼š");
 	scanf("%s", &L.elem[i].Name);
 	
 	while (1)
 	{
-		printf("ÇëÊäÈëÊıÑ§³É¼¨£º");
+		printf("è¯·è¾“å…¥æ•°å­¦æˆç»©ï¼š");
 		scanf("%f", &L.elem[i].Mscore);
 		if (L.elem[i].Mscore < 0 || L.elem[i].Mscore>100)
 		{
-			printf("³É¼¨ÊäÈë´íÎó£¬ÊıÑ§³É¼¨Ó¦ÔÚ£¨0-100£©Ö®¼ä,");
+			printf("æˆç»©è¾“å…¥é”™è¯¯ï¼Œæ•°å­¦æˆç»©åº”åœ¨ï¼ˆ0-100ï¼‰ä¹‹é—´,");
 		}
 		else
 			break;
 	}
 	while (1)
 	{
-		printf("ÇëÊäÈëÓïÎÄ³É¼¨£º");
+		printf("è¯·è¾“å…¥è¯­æ–‡æˆç»©ï¼š");
 		scanf("%f", &L.elem[i].Cscore);
 		if (L.elem[i].Cscore < 0 || L.elem[i].Cscore>100)
 		{
-			printf("³É¼¨ÊäÈë´íÎó£¬ÓïÎÄ³É¼¨Ó¦ÔÚ£¨0-100£©Ö®¼ä,");
+			printf("æˆç»©è¾“å…¥é”™è¯¯ï¼Œè¯­æ–‡æˆç»©åº”åœ¨ï¼ˆ0-100ï¼‰ä¹‹é—´,");
 		}
 		else
 			break;
 	}
 	while (1)
 	{
-		printf("ÇëÊäÈëÓ¢Óï³É¼¨£º");
+		printf("è¯·è¾“å…¥è‹±è¯­æˆç»©ï¼š");
 		scanf("%f", &L.elem[i].Escore);
 		if (L.elem[i].Escore < 0 || L.elem[i].Escore>100)
 		{
-			printf("³É¼¨ÊäÈë´íÎó£¬Ó¢Óï³É¼¨Ó¦ÔÚ£¨0-100£©Ö®¼ä,");
+			printf("æˆç»©è¾“å…¥é”™è¯¯ï¼Œè‹±è¯­æˆç»©åº”åœ¨ï¼ˆ0-100ï¼‰ä¹‹é—´,");
 		}
 		else
 			break;
 	}
 }
 
-/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
-¨U¸ù¾İÖ¸¶¨Ñ§Éú¸öÊı£¬Öğ¸öÊäÈëÑ§ÉúĞÅÏ¢  ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/
+/*â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
+â•‘æ ¹æ®æŒ‡å®šå­¦ç”Ÿä¸ªæ•°ï¼Œé€ä¸ªè¾“å…¥å­¦ç”Ÿä¿¡æ¯  â•‘
+â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
 int StuCreat(SqList &L)
 {
-	int a;	//°à¼¶ÈËÊı
+	int a;	//ç­çº§äººæ•°
 	int flag;
 	L.length=0;
-	printf("ÊäÈë°à¼¶ÈËÊı£º");
+	printf("è¾“å…¥ç­çº§äººæ•°ï¼š");
 	scanf("%d",&a);
 	if(a<1||a>MAXSIZE)
 		return ERROR;
 	for(int i=1;i<=a;i++)
 	{
-		stu_ifo(i,L);		//i Î»ÖÃ
+		stu_ifo(i,L);		//i ä½ç½®
 		L.length++;
 	}
 	while (true)
 	{
-		printf("¼ÌĞøÊäÈëÇë°´1£¬·µ»ØÉÏÒ»¼¶²Ëµ¥Çë°´2£¬ÍË³öÇë°´0: ");
+		printf("ç»§ç»­è¾“å…¥è¯·æŒ‰1ï¼Œè¿”å›ä¸Šä¸€çº§èœå•è¯·æŒ‰2ï¼Œé€€å‡ºè¯·æŒ‰0: ");
 		scanf("%d", &flag);
 		if (flag == 0) {
 			exit(0);
@@ -153,8 +152,8 @@ int StuCreat(SqList &L)
 			if (L.length == a)
 			{
 
-				printf("\nÄãµ±Ç°ÒÑ´æÈËÊıÒÑ´ïµ½ÄãÉè¶¨µÄÉÏÏŞ£¬²»ÄÜÔÙÂ¼ÈëÑ§ÉúĞÅÏ¢£¬\n\nÈçĞè¼ÌĞø²åÈëÑ§Éú,Çë·µ»ØÉÏÒ»¼¶²Ëµ¥£¬\n\nÑ¡Ôñ²åÈë¹¦ÄÜ»òÑ¡Ôñ±¾¹¦ÄÜ£¬ÖØĞÂÂ¼ÈëÑ§ÉúĞÅÏ¢\n\n");
-				printf("ÊäÈë¹¦ÄÜ´íÎó,ÇëÖØĞÂÊäÈë\n");
+				printf("\nä½ å½“å‰å·²å­˜äººæ•°å·²è¾¾åˆ°ä½ è®¾å®šçš„ä¸Šé™ï¼Œä¸èƒ½å†å½•å…¥å­¦ç”Ÿä¿¡æ¯ï¼Œ\n\nå¦‚éœ€ç»§ç»­æ’å…¥å­¦ç”Ÿ,è¯·è¿”å›ä¸Šä¸€çº§èœå•ï¼Œ\n\né€‰æ‹©æ’å…¥åŠŸèƒ½æˆ–é€‰æ‹©æœ¬åŠŸèƒ½ï¼Œé‡æ–°å½•å…¥å­¦ç”Ÿä¿¡æ¯\n\n");
+				printf("è¾“å…¥åŠŸèƒ½é”™è¯¯,è¯·é‡æ–°è¾“å…¥\n");
 				continue;
 			}
 			else
@@ -165,32 +164,32 @@ int StuCreat(SqList &L)
 			return OK;
 		}
 		else
-			printf("ÊäÈë¹¦ÄÜ´íÎó,ÇëÖØĞÂÊäÈë\n");
+			printf("è¾“å…¥åŠŸèƒ½é”™è¯¯,è¯·é‡æ–°è¾“å…¥\n");
 	}
 
 }
-/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
-¨U Öğ¸öÏÔÊ¾Ñ§Éú±íÖĞËùÓĞÑ§ÉúµÄÏà¹ØĞÅÏ¢ ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/
-int Display(SqList &L,int star,int end,int index)	//star¿ªÊ¼ÏÔÊ¾µÄÎ»ÖÃ  end½áÊøÏÔÊ¾µÄÎ»ÖÃ	flag ¹¦ÄÜ 0ÆÕÍ¨ÏÔÊ¾ 1²éÑ¯ÏÔÊ¾
+/*â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
+â•‘ é€ä¸ªæ˜¾ç¤ºå­¦ç”Ÿè¡¨ä¸­æ‰€æœ‰å­¦ç”Ÿçš„ç›¸å…³ä¿¡æ¯ â•‘
+â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
+int Display(SqList &L,int star,int end,int index)	//starå¼€å§‹æ˜¾ç¤ºçš„ä½ç½®  endç»“æŸæ˜¾ç¤ºçš„ä½ç½®	flag åŠŸèƒ½ 0æ™®é€šæ˜¾ç¤º 1æŸ¥è¯¢æ˜¾ç¤º
 {
 	int flag;
 	
-	printf("/*-----------------------------------------------------¨[\n");
-	printf("¨U                       Ñ§ÉúĞÅÏ¢                       ¨U\n");
-	printf("¨U------------------------------------------------------¨U\n");
-	printf("¨U ĞòºÅ |Ñ§ºÅ |  ĞÕÃû  | ÓïÎÄ³É¼¨ | ÊıÑ§³É¼¨ | Ó¢Óï³É¼¨ ¨U\n");
+	printf("/*-----------------------------------------------------â•—\n");
+	printf("â•‘                       å­¦ç”Ÿä¿¡æ¯                       â•‘\n");
+	printf("â•‘------------------------------------------------------â•‘\n");
+	printf("â•‘ åºå· |å­¦å· |  å§“å  | è¯­æ–‡æˆç»© | æ•°å­¦æˆç»© | è‹±è¯­æˆç»© â•‘\n");
 	if(index==0)
 	{
 		for (int i = star; i <= end; i++)
 		{
-			printf("¨U------------------------------------------------------¨U\n");
+			printf("â•‘------------------------------------------------------â•‘\n");
 			if(strlen(L.elem[i].Name) ==4)
 			{
-				printf("¨U   %d  | %d |  %s  |   %.2f  |   %.2f  |   %.2f  ¨U\n", i, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
+				printf("â•‘   %d  | %d |  %s  |   %.2f  |   %.2f  |   %.2f  â•‘\n", i, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
 			}
 			else
-				printf("¨U   %d  | %d | %s |   %.2f  |   %.2f  |   %.2f  ¨U\n", i, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
+				printf("â•‘   %d  | %d | %s |   %.2f  |   %.2f  |   %.2f  â•‘\n", i, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
 		}
 	}
 	if (index == 1)
@@ -198,20 +197,20 @@ int Display(SqList &L,int star,int end,int index)	//star¿ªÊ¼ÏÔÊ¾µÄÎ»ÖÃ  end½áÊøÏ
 		for (int i = star; i <= end; i++)
 		{
 			int no = 1;
-			printf("¨U------------------------------------------------------¨U\n");
+			printf("â•‘------------------------------------------------------â•‘\n");
 			if (strlen(L.elem[i].Name) == 4)
 			{
-				printf("¨U   %d  | %d |  %s  |   %.2f  |   %.2f  |   %.2f  ¨U\n", no, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
+				printf("â•‘   %d  | %d |  %s  |   %.2f  |   %.2f  |   %.2f  â•‘\n", no, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
 			}
 			else
-				printf("¨U   %d  | %d | %s |   %.2f  |   %.2f  |   %.2f  ¨U\n", no, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
+				printf("â•‘   %d  | %d | %s |   %.2f  |   %.2f  |   %.2f  â•‘\n", no, L.elem[i].Sno, L.elem[i].Name, L.elem[i].Cscore, L.elem[i].Mscore, L.elem[i].Escore);
 		}
 	}
 	
-	printf("¨^-------------------------------------------------------*/\n");
+	printf("â•š-------------------------------------------------------*/\n");
 	while (true)
 	{
-		printf("·µ»ØÉÏÒ»¼¶²Ëµ¥Çë°´1£¬ÍË³öÇë°´0: ");
+		printf("è¿”å›ä¸Šä¸€çº§èœå•è¯·æŒ‰1ï¼Œé€€å‡ºè¯·æŒ‰0: ");
 		scanf("%d", &flag);
 		if (flag == 0)
 		{
@@ -223,38 +222,38 @@ int Display(SqList &L,int star,int end,int index)	//star¿ªÊ¼ÏÔÊ¾µÄÎ»ÖÃ  end½áÊøÏ
 			return OK;
 		}
 		else
-			printf("¹¦ÄÜÑ¡Ôñ´íÎó£¬ÇëÖØĞÂÊäÈë\n");
+			printf("åŠŸèƒ½é€‰æ‹©é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥\n");
 	}
 	
 }
-/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
-¨U ¸ø¶¨Ò»¸öÑ§ÉúĞÅÏ¢£¬²åÈëµ½±íÖĞÖ¸¶¨µÄÎ»ÖÃ ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/
+/*â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
+â•‘ ç»™å®šä¸€ä¸ªå­¦ç”Ÿä¿¡æ¯ï¼Œæ’å…¥åˆ°è¡¨ä¸­æŒ‡å®šçš„ä½ç½® â•‘
+â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
 int Insert(SqList &L)//
 {
 	while (1)
 	{
 		int flag;
 		int index;
-		printf("ÊäÈëÄãÏë²åÈëµÄÎ»ÖÃ£º");
+		printf("è¾“å…¥ä½ æƒ³æ’å…¥çš„ä½ç½®ï¼š");
 		scanf("%d", &index);
 		int length = L.length;
 		if ((index < 1) || (index > length + 1))
 			return ERROR;
 		if(	 (L.length>= MAXSIZE))
 			return ERROR;
-		if (index == length+1)						//Ä©¶Ë²åÈëĞÂÖµ
+		if (index == length+1)						//æœ«ç«¯æ’å…¥æ–°å€¼
 		{
 			L.length=L.length+1;
 			for (int i = index ; i <= index ; i++)
 			{
-				stu_ifo(i, L);						//i²åÈëµÄÎ»ÖÃ
+				stu_ifo(i, L);						//iæ’å…¥çš„ä½ç½®
 			}
 		}
 		else
 		{
 			L.elem[0] = L.elem[index];
-			for (int i = L.length; i >= 0; i--)					//ÒÆÎ» 
+			for (int i = L.length; i >= 0; i--)					//ç§»ä½ 
 			{
 				if (i <= index)
 					break;
@@ -271,11 +270,11 @@ int Insert(SqList &L)//
 				stu_ifo(i, L);
 			}
 		}
-		printf("²åÈë³É¹¦\n");
+		printf("æ’å…¥æˆåŠŸ\n");
 		
 		while (true)
 		{
-			printf("¼ÌĞø²åÈëÇë°´1£¬·µ»ØÉÏÒ»¼¶²Ëµ¥Çë°´2£¬ÍË³öÇë°´0: ");
+			printf("ç»§ç»­æ’å…¥è¯·æŒ‰1ï¼Œè¿”å›ä¸Šä¸€çº§èœå•è¯·æŒ‰2ï¼Œé€€å‡ºè¯·æŒ‰0: ");
 			scanf("%d", &flag);
 			if (flag == 0)
 			{
@@ -290,15 +289,15 @@ int Insert(SqList &L)//
 				return OK;
 			}
 			else
-				printf("¹¦ÄÜÑ¡Ôñ´íÎó£¬ÇëÖØĞÂÊäÈë\n");
+				printf("åŠŸèƒ½é€‰æ‹©é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥\n");
 		}
 		
 	}
 }
 
-/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
-¨U É¾³ıÖ¸¶¨Î»ÖÃµÄÑ§Éú¼ÇÂ¼ ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/
+/*â•â•â•â•â•â•â•â•â•â•â•â•â•—
+â•‘ åˆ é™¤æŒ‡å®šä½ç½®çš„å­¦ç”Ÿè®°å½• â•‘
+â•šâ•â•â•â•â•â•â•â•â•â•â•â•*/
 int Delete(SqList &L)
 {
 	int flag;
@@ -306,7 +305,7 @@ int Delete(SqList &L)
 	int num = 0;
 	while (1)
 	{
-		printf("ÇëÊäÈëÄãÒªÉ¾³ıÊı¾İµÄÑ§ºÅ£º");
+		printf("è¯·è¾“å…¥ä½ è¦åˆ é™¤æ•°æ®çš„å­¦å·ï¼š");
 		scanf("%d", &i);
 		for (int j = 0; j <= L.length; j++)
 		{
@@ -326,11 +325,11 @@ int Delete(SqList &L)
 			}
 			L.length--;
 		}
-		printf("É¾³ı³É¹¦\n");
+		printf("åˆ é™¤æˆåŠŸ\n");
 		
 		while(1)
 		{
-			printf("É¾³ı²åÈëÇë°´ 1£¬·µ»ØÉÏÒ»¼¶²Ëµ¥Çë°´2£¬ÍË³öÇë°´0: ");
+			printf("åˆ é™¤æ’å…¥è¯·æŒ‰ 1ï¼Œè¿”å›ä¸Šä¸€çº§èœå•è¯·æŒ‰2ï¼Œé€€å‡ºè¯·æŒ‰0: ");
 			scanf("%d", &flag);
 			if (flag == 0)
 			{
@@ -345,23 +344,23 @@ int Delete(SqList &L)
 				return OK;
 			}
 			else
-				printf("¹¦ÄÜÑ¡Ôñ´íÎó£¬ÇëÖØĞÂÊäÈë\n");
+				printf("åŠŸèƒ½é€‰æ‹©é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥\n");
 		}
 		
 	}
 }
-/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
-¨U Í³¼Æ±íÖĞÑ§Éú¸öÊı ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T*/
+/*â•â•â•â•â•â•â•â•â•â•—
+â•‘ ç»Ÿè®¡è¡¨ä¸­å­¦ç”Ÿä¸ªæ•° â•‘
+â•šâ•â•â•â•â•â•â•â•â•*/
 int count(SqList &L)
 {
 	int flag;
 	int a;
-	printf("Í³¼Æ³É¹¦£¬");
-	printf("±íÖĞÑ§Éú¸öÊıÎª£º%d\n", L.length);
+	printf("ç»Ÿè®¡æˆåŠŸï¼Œ");
+	printf("è¡¨ä¸­å­¦ç”Ÿä¸ªæ•°ä¸ºï¼š%d\n", L.length);
 	while(1)
 	{
-		printf("·µ»ØÉÏÒ»¼¶²Ëµ¥Çë °´1£¬ÍË³ö Çë°´0: ");
+		printf("è¿”å›ä¸Šä¸€çº§èœå•è¯· æŒ‰1ï¼Œé€€å‡º è¯·æŒ‰0: ");
 		scanf("%d", &flag);
 		if (flag == 0)
 		{
@@ -374,13 +373,13 @@ int count(SqList &L)
 			return OK;
 		}
 		else
-			printf("¹¦ÄÜÑ¡Ôñ´íÎó£¬ÇëÖØĞÂÊäÈë\n");
+			printf("åŠŸèƒ½é€‰æ‹©é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥\n");
 	}
 	
  } 
-/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
-¨U ¸ù¾İĞÕÃû£¨»òÕßÑ§ºÅ£©½øĞĞË³Ğò²éÕÒ   ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/
+/*â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
+â•‘ æ ¹æ®å§“åï¼ˆæˆ–è€…å­¦å·ï¼‰è¿›è¡Œé¡ºåºæŸ¥æ‰¾   â•‘
+â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
 int order(SqList &L)
 {
 	int a;
@@ -389,18 +388,18 @@ int order(SqList &L)
 	
 	while (1)
 	{
-		printf("ÊäÈëÄãÏëÒªµÄ²éÕÒ·½Ê½£¬0°´ĞÕÃû²éÕÒ£¬1°´Ñ§ºÅ²éÕÒ£º");
+		printf("è¾“å…¥ä½ æƒ³è¦çš„æŸ¥æ‰¾æ–¹å¼ï¼Œ0æŒ‰å§“åæŸ¥æ‰¾ï¼Œ1æŒ‰å­¦å·æŸ¥æ‰¾ï¼š");
 		scanf("%d", &a);
 		
 		switch (a)
 		{
 			case 0:
 			{
-				printf("ÊäÈëÄãÒª²éÕÒµÄĞÕÃû£º");
+				printf("è¾“å…¥ä½ è¦æŸ¥æ‰¾çš„å§“åï¼š");
 				scanf("%s", sname);
 				if (!strcmp(sname, "\0"))
 				{
-					printf("ÊäÈë´íÎó£¬ÇëÖØĞÂÊäÈë\n");
+					printf("è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥\n");
 					continue;
 				}
 				else
@@ -408,7 +407,7 @@ int order(SqList &L)
 					int num = 0;
 					for (int i = 1; i <= L.length; i++)
 					{
-						if (strcmp(L.elem[i].Name, sname) == 0)	//strcmpº¯Êı£¬±È½ÏÁ½¸ö×Ö·û´®
+						if (strcmp(L.elem[i].Name, sname) == 0)	//strcmpå‡½æ•°ï¼Œæ¯”è¾ƒä¸¤ä¸ªå­—ç¬¦ä¸²
 						{
 							num = i;
 							Display(L, i, i,1);
@@ -417,18 +416,18 @@ int order(SqList &L)
 					}
 					if (num == 0)
 					{
-						printf("²éÑ¯Ê§°Ü¸ÃÑ§Éú²»´æÔÚ\n");
+						printf("æŸ¥è¯¢å¤±è´¥è¯¥å­¦ç”Ÿä¸å­˜åœ¨\n");
 						return ERROR;
 					}
 				}
 			}
 			case 1:
 			{	int num = 0;
-				printf("ÊäÈëÄãÒª²éÕÒµÄÑ§ºÅ£º");
+				printf("è¾“å…¥ä½ è¦æŸ¥æ‰¾çš„å­¦å·ï¼š");
 				scanf("%d", &sno);
 				if (sno == 0)
 				{
-					printf("ÊäÈë´íÎó£¬ÇëÖØĞÂÊäÈë\n");
+					printf("è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥\n");
 					continue;
 				}
 				else
@@ -444,23 +443,23 @@ int order(SqList &L)
 					}
 					if (num == 0)
 					{
-						printf("²éÑ¯Ê§°Ü¸ÃÑ§Éú²»´æÔÚ\n");
+						printf("æŸ¥è¯¢å¤±è´¥è¯¥å­¦ç”Ÿä¸å­˜åœ¨\n");
 						return ERROR;
 					}
 				}
 			}
 			default:
-				printf("ÊäÈë´íÎóÇëÖØĞÂÊäÈë\n");
+				printf("è¾“å…¥é”™è¯¯è¯·é‡æ–°è¾“å…¥\n");
 		}
 	}
 }
-/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
-¨U ÀûÓÃÖ±½Ó²åÈëÅÅĞò°´ÕÕÑ§ºÅ½øĞĞÅÅĞò   ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/
-int StraightInsertionSort(SqList &L)	//Ñ§ºÅ´ÓĞ¡µ½´óµÄË³ĞòÅÅ     ĞòºÅÓĞÎÊÌâ´ıµ÷Õû
+/*â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
+â•‘ åˆ©ç”¨ç›´æ¥æ’å…¥æ’åºæŒ‰ç…§å­¦å·è¿›è¡Œæ’åº   â•‘
+â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
+int StraightInsertionSort(SqList &L)	//å­¦å·ä»å°åˆ°å¤§çš„é¡ºåºæ’     åºå·æœ‰é—®é¢˜å¾…è°ƒæ•´
 {
 	int i, j;
-	for(i=2;i<=L.length;i++)			//Ñ­»·´ÓµÚ¶ş¸öÊı¿ªÊ¼
+	for(i=2;i<=L.length;i++)			//å¾ªç¯ä»ç¬¬äºŒä¸ªæ•°å¼€å§‹
 	{
 		if(L.elem[i].Sno < L.elem[i - 1].Sno)
 		{
@@ -475,12 +474,12 @@ int StraightInsertionSort(SqList &L)	//Ñ§ºÅ´ÓĞ¡µ½´óµÄË³ĞòÅÅ     ĞòºÅÓĞÎÊÌâ´ıµ÷Õû
 		}
 	}
 	Display(L,1,L.length,0);
-	printf("ÅÅĞò³É¹¦\n");
+	printf("æ’åºæˆåŠŸ\n");
 	return OK;
 }
-/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
-¨U ÀûÓÃÃ°ÅİÅÅĞò°´ÕÕÊıÑ§³É¼¨½øĞĞÅÅĞò   ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/
+/*â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
+â•‘ åˆ©ç”¨å†’æ³¡æ’åºæŒ‰ç…§æ•°å­¦æˆç»©è¿›è¡Œæ’åº   â•‘
+â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
 int BubbleSort(SqList &L)
 {
 	int m=L.length;
@@ -501,12 +500,12 @@ int BubbleSort(SqList &L)
 		--m;
 	}
 	Display(L,1,L.length,0);
-	printf("ÅÅĞò³É¹¦\n");
+	printf("æ’åºæˆåŠŸ\n");
 	return OK;
 }
-/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
-¨U ÀûÓÃ¼òµ¥Ñ¡ÔñÅÅĞò°´ÕÕÓïÎÄ³É¼¨½øĞĞÅÅĞò ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/
+/*â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
+â•‘ åˆ©ç”¨ç®€å•é€‰æ‹©æ’åºæŒ‰ç…§è¯­æ–‡æˆç»©è¿›è¡Œæ’åº â•‘
+â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
 int SimpleSelectionSort(SqList &L)
 {
 	Stu min[MAXSIZE] = { '\0' };
@@ -516,28 +515,28 @@ int SimpleSelectionSort(SqList &L)
 		min[i] = L.elem[i];
 		for (int j = i + 1; j <= L.length; j++)
 		{
-			if (L.elem[j].Cscore < min[i].Cscore)			//ÕÒ³ö×îĞ¡Öµ
+			if (L.elem[j].Cscore < min[i].Cscore)			//æ‰¾å‡ºæœ€å°å€¼
 			{
 				min[i] = L.elem[j];
 			}
 			if (min[i].Cscore != L.elem[i].Cscore)
 			{
 				L.elem[0] = L.elem[i];
-				L.elem[i] = min[i];						//°Ñ×îĞ¡ÖµÒÆµ½×îÇ°
+				L.elem[i] = min[i];						//æŠŠæœ€å°å€¼ç§»åˆ°æœ€å‰
 				L.elem[j] = L.elem[0];
 			}
 
 		}
 	}
 	Display(L,1,L.length,0);
-	printf("ÅÅĞò³É¹¦\n");
+	printf("æ’åºæˆåŠŸ\n");
 	return OK;
 }
 
-/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
-¨U ÀûÓÃ¿ìËÙÅÅĞò°´ÕÕÓ¢Óï³É¼¨½øĞĞÅÅĞò   ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/
-//ÓÃÊéÉÏµÄÊÓÆµµÄĞ´·¨Ğ´µÄ£¬µÈÀÏÊ¦½²¹ıÕâ¸öËã·¨Ö®ºóÔÚ¸ÄĞ´£¬2018ÔÙ¼û°Ñ(*^_^*)
+/*â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
+â•‘ åˆ©ç”¨å¿«é€Ÿæ’åºæŒ‰ç…§è‹±è¯­æˆç»©è¿›è¡Œæ’åº   â•‘
+â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
+//ç”¨ä¹¦ä¸Šçš„è§†é¢‘çš„å†™æ³•å†™çš„ï¼Œç­‰è€å¸ˆè®²è¿‡è¿™ä¸ªç®—æ³•ä¹‹ååœ¨æ”¹å†™ï¼Œ2018å†è§æŠŠ(*^_^*)
 int Partition(SqList &L,int low,int high)
 {
 	L.elem[0] = L.elem[low];
@@ -568,24 +567,24 @@ int QSort(SqList &L, int low, int high)
 	}
 	return OK;
 }
-/*¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨[
-¨U ¸ù¾İÑ§ºÅ½øĞĞÕÛ°ë²éÕÒ£¬³É¹¦·µ»Ø´ËÑ§ÉúµÄĞÕÃûºÍ¸÷¿Æ³É¼¨   ¨U
-¨^¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T*/
+/*â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
+â•‘ æ ¹æ®å­¦å·è¿›è¡ŒæŠ˜åŠæŸ¥æ‰¾ï¼ŒæˆåŠŸè¿”å›æ­¤å­¦ç”Ÿçš„å§“åå’Œå„ç§‘æˆç»©   â•‘
+â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•*/
 int binsearch(SqList &L)
 {
 	
-	int k = 0;							//Ä¿±êÑ§ºÅ
-	int No = -1;						//Ä¿±êËùÔÚµÄĞòºÅ
-	printf("ÊäÈëÄãÒª²éÑ¯µÄÑ§ºÅ£º");
+	int k = 0;							//ç›®æ ‡å­¦å·
+	int No = -1;						//ç›®æ ‡æ‰€åœ¨çš„åºå·
+	printf("è¾“å…¥ä½ è¦æŸ¥è¯¢çš„å­¦å·ï¼š");
 	scanf("%d", &k);
 	if (k <= 0)
 		return ERROR;
-	for (int i = 2; i <= L.length; i++)	//ÕÛ°ë²åÈëÅÅĞò
+	for (int i = 2; i <= L.length; i++)	//æŠ˜åŠæ’å…¥æ’åº
 	{
 		L.elem[0] = L.elem[i];
-		int low = 1;					//×îĞ¡Öµ
-		int high = i-1;			//×î´óÖµ
-		int mid;						//ÖĞ¼äÖµ
+		int low = 1;					//æœ€å°å€¼
+		int high = i-1;			//æœ€å¤§å€¼
+		int mid;						//ä¸­é—´å€¼
 		while (low <= high)
 		{
 			mid = (low + high) / 2;//low + ((high - low) / 2);
@@ -596,21 +595,21 @@ int binsearch(SqList &L)
 		}
 		for (int j = i - 1; j >= high; j--)
 		{
-			L.elem[j + 1] = L.elem[j];	//ºóÒÆ
+			L.elem[j + 1] = L.elem[j];	//åç§»
 		}
-		L.elem[high + 1] = L.elem[0];	//²åÈë
+		L.elem[high + 1] = L.elem[0];	//æ’å…¥
 	}
-	int low = 1;						//×îĞ¡Öµ
-	int high = L.length;				//×î´óÖµ
-	int mid=0;							//ÖĞ¼äÖµ
-	while (low <= high)					//ÕÛ°ë²éÕÒ
+	int low = 1;						//æœ€å°å€¼
+	int high = L.length;				//æœ€å¤§å€¼
+	int mid=0;							//ä¸­é—´å€¼
+	while (low <= high)					//æŠ˜åŠæŸ¥æ‰¾
 	{
 		if (L.elem[low].Sno == k)
 			return low;
 		if (L.elem[high].Sno == k)
 			return high;
 
-		mid = low + ((high - low) / 2);	//±ÜÃâ·¢ÉúÒç³ö
+		mid = low + ((high - low) / 2);	//é¿å…å‘ç”Ÿæº¢å‡º
 
 		if (L.elem[mid].Sno == k)
 			return mid;
@@ -623,66 +622,66 @@ int binsearch(SqList &L)
 		return ERROR;
 	else
 	{
-		printf("ÅÅĞò³É¹¦\n");
+		printf("æ’åºæˆåŠŸ\n");
 		return k;
 	}
 }
-/*¨T¨T¨T¨T¨T¨[
-¨U  Ö÷º¯Êı  ¨U
-¨^¨T¨T¨T¨T¨T*/
+/*â•â•â•â•â•â•—
+â•‘  ä¸»å‡½æ•°  â•‘
+â•šâ•â•â•â•â•*/
 int main()
 {
 	SqList Students;
-	int c = 0;				//Ñ¡Ôñ¹¦ÄÜ
-	int k = 0;				//·µ»ØÊı¾İËùÔÚÎ»ÖÃ
+	int c = 0;				//é€‰æ‹©åŠŸèƒ½
+	int k = 0;				//è¿”å›æ•°æ®æ‰€åœ¨ä½ç½®
 	if (InitList(Students) == OK)
-		printf("³õÊ¼»¯³É¹¦\n");
+		printf("åˆå§‹åŒ–æˆåŠŸ\n");
 	else
-		printf("³õÊ¼»¯Ê§°Ü\n");
+		printf("åˆå§‹åŒ–å¤±è´¥\n");
 
 	while (1)
 	{
-		printf("/*-------------------------------------------------------------------------¨[\n");
-		printf("¨U       1 ¸ù¾İÖ¸¶¨Ñ§Éú¸öÊı£¬Öğ¸öÊäÈëÑ§ÉúĞÅÏ¢                               ¨U\n");//Íê³É¡Ì
-		printf("¨U       2 Öğ¸öÏÔÊ¾Ñ§Éú±íÖĞËùÓĞÑ§ÉúµÄÏà¹ØĞÅÏ¢                               ¨U\n");//Íê³É¡Ì	
-		printf("¨U       3 ¸ø¶¨Ò»¸öÑ§ÉúĞÅÏ¢£¬²åÈëµ½±íÖĞÖ¸¶¨µÄÎ»ÖÃ                           ¨U\n");//Íê³É¡Ì
-		printf("¨U       4 É¾³ıÖ¸¶¨Ñ§ºÅµÄÑ§Éú¼ÇÂ¼                                           ¨U\n");//Íê³É¡Ì
-		printf("¨U       5 Í³¼Æ±íÖĞÑ§Éú¸öÊı                                                 ¨U\n");//Íê³É¡Ì
-		printf("¨U       6 ¸ù¾İĞÕÃû£¨»òÕßÑ§ºÅ£©½øĞĞË³Ğò²éÕÒ                                 ¨U\n");//Íê³É¡Ì
-		printf("¨U       7 ÀûÓÃÖ±½Ó²åÈëÅÅĞò°´ÕÕÑ§ºÅ½øĞĞÅÅĞò                                 ¨U\n");//Íê³É¡Ì	
-		printf("¨U       8 ÀûÓÃÃ°ÅİÅÅĞò°´ÕÕÊıÑ§³É¼¨½øĞĞÅÅĞò                                 ¨U\n");//Íê³É¡Ì	
-		printf("¨U       9 ÀûÓÃ¼òµ¥Ñ¡ÔñÅÅĞò°´ÕÕÓïÎÄ³É¼¨½øĞĞÅÅĞò                             ¨U\n");//Íê³É¡Ì	
-		printf("¨U       10 ÀûÓÃ¿ìËÙÅÅĞò°´ÕÕÓ¢Óï³É¼¨½øĞĞÅÅĞò                                ¨U\n");//Íê³É¡Ì	
-		printf("¨U       11 ¸ù¾İÑ§ºÅ½øĞĞÕÛ°ë²éÕÒ£¬³É¹¦·µ»Ø´ËÑ§ÉúµÄĞÕÃûºÍ¸÷¿Æ³É¼¨            ¨U\n");//Íê³É¡Ì
-		printf("¨U       12                      ÍË³ö                                       ¨U\n");//Íê³É¡Ì
-		printf("¨^--------------------------------------------------------------------------*/\n");
-		printf("ÇëÑ¡Ôñ¹¦ÄÜ£º");
+		printf("/*-------------------------------------------------------------------------â•—\n");
+		printf("â•‘       1 æ ¹æ®æŒ‡å®šå­¦ç”Ÿä¸ªæ•°ï¼Œé€ä¸ªè¾“å…¥å­¦ç”Ÿä¿¡æ¯                               â•‘\n");//å®Œæˆâˆš
+		printf("â•‘       2 é€ä¸ªæ˜¾ç¤ºå­¦ç”Ÿè¡¨ä¸­æ‰€æœ‰å­¦ç”Ÿçš„ç›¸å…³ä¿¡æ¯                               â•‘\n");//å®Œæˆâˆš	
+		printf("â•‘       3 ç»™å®šä¸€ä¸ªå­¦ç”Ÿä¿¡æ¯ï¼Œæ’å…¥åˆ°è¡¨ä¸­æŒ‡å®šçš„ä½ç½®                           â•‘\n");//å®Œæˆâˆš
+		printf("â•‘       4 åˆ é™¤æŒ‡å®šå­¦å·çš„å­¦ç”Ÿè®°å½•                                           â•‘\n");//å®Œæˆâˆš
+		printf("â•‘       5 ç»Ÿè®¡è¡¨ä¸­å­¦ç”Ÿä¸ªæ•°                                                 â•‘\n");//å®Œæˆâˆš
+		printf("â•‘       6 æ ¹æ®å§“åï¼ˆæˆ–è€…å­¦å·ï¼‰è¿›è¡Œé¡ºåºæŸ¥æ‰¾                                 â•‘\n");//å®Œæˆâˆš
+		printf("â•‘       7 åˆ©ç”¨ç›´æ¥æ’å…¥æ’åºæŒ‰ç…§å­¦å·è¿›è¡Œæ’åº                                 â•‘\n");//å®Œæˆâˆš	
+		printf("â•‘       8 åˆ©ç”¨å†’æ³¡æ’åºæŒ‰ç…§æ•°å­¦æˆç»©è¿›è¡Œæ’åº                                 â•‘\n");//å®Œæˆâˆš	
+		printf("â•‘       9 åˆ©ç”¨ç®€å•é€‰æ‹©æ’åºæŒ‰ç…§è¯­æ–‡æˆç»©è¿›è¡Œæ’åº                             â•‘\n");//å®Œæˆâˆš	
+		printf("â•‘       10 åˆ©ç”¨å¿«é€Ÿæ’åºæŒ‰ç…§è‹±è¯­æˆç»©è¿›è¡Œæ’åº                                â•‘\n");//å®Œæˆâˆš	
+		printf("â•‘       11 æ ¹æ®å­¦å·è¿›è¡ŒæŠ˜åŠæŸ¥æ‰¾ï¼ŒæˆåŠŸè¿”å›æ­¤å­¦ç”Ÿçš„å§“åå’Œå„ç§‘æˆç»©            â•‘\n");//å®Œæˆâˆš
+		printf("â•‘       12                      é€€å‡º                                       â•‘\n");//å®Œæˆâˆš
+		printf("â•š--------------------------------------------------------------------------*/\n");
+		printf("è¯·é€‰æ‹©åŠŸèƒ½ï¼š");
 		scanf("%d", &c);
 		switch (c)
 		{
 		case 1:
 			if(StuCreat(Students)==OK)
 			{
-				printf("´´½¨³É¹¦£¡?(£Ş?£Ş¡ñ)?\n");
-				printf("µ±Ç°ÒÑ´æÈËÊı£º%d\n",Students.length);
+				printf("åˆ›å»ºæˆåŠŸï¼?(ï¼¾?ï¼¾â—)?\n");
+				printf("å½“å‰å·²å­˜äººæ•°ï¼š%d\n",Students.length);
 			}
 			else
-				printf("´´½¨Ê§°Ü(©Ğ£ß©Ğ)\n");
+				printf("åˆ›å»ºå¤±è´¥(â”¬ï¼¿â”¬)\n");
 			break;
 		case 2:
 			if( Display(Students,1,Students.length,0)==OK)
-				printf("ÏÔÊ¾Íê±Ï\n");
+				printf("æ˜¾ç¤ºå®Œæ¯•\n");
 			break;
 		case 3:
 			
 			if (Insert(Students) == ERROR)
-				printf("²åÈëÊ§°Ü\n");
+				printf("æ’å…¥å¤±è´¥\n");
 			else
 				Display(Students, 1, Students.length,0);
 			break;
 		case 4:
 			if (Delete(Students) == ERROR)
-				printf("É¾³ıÊ§°Ü£¬Ñ§ºÅ²»´æÔÚ\n");
+				printf("åˆ é™¤å¤±è´¥ï¼Œå­¦å·ä¸å­˜åœ¨\n");
 			else
 				Display(Students, 1, Students.length,0);
 			break;
@@ -704,14 +703,14 @@ int main()
 		case 10:
 			if (QSort(Students, 1, Students.length) == OK)
 			{
-				printf("ÅÅĞò³É¹¦£¡\n");
+				printf("æ’åºæˆåŠŸï¼\n");
 				Display(Students, 1, Students.length,0);
 			}
 			break;
 		case 11:
 			k = binsearch(Students);
 			if(k==ERROR)
-				printf("²éÑ¯Ê§°Ü£¬¸ÃÑ§ºÅ²»´æÔÚ\n");
+				printf("æŸ¥è¯¢å¤±è´¥ï¼Œè¯¥å­¦å·ä¸å­˜åœ¨\n");
 			else
 			{
 				Display(Students, k, k,1);
@@ -721,7 +720,7 @@ int main()
 			exit(OK);
 			break;
 		default:
-			printf("ÊäÈë´íÎó\n");
+			printf("è¾“å…¥é”™è¯¯\n");
 		}
 	}
 	getchar();
